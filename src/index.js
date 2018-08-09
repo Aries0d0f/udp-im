@@ -30,7 +30,18 @@ Server.on('message', (msg, info) => {
           colors.yellow(' join.\n')
     
         console.info(newMsg)
-        userList.filter(e => (!e.newmember)).forEach(info => sendMessage(newMsg, info))
+        userList.filter(e => (!e.newmember)).forEach(existUser => sendMessage(newMsg, existUser))
+        sendMessage(
+          colors.gray('\n\n-------------------\n') +
+          colors.yellow('\nRoom:\n\n') +
+          colors.underline.yellow(
+            userList.filter(e => (!e.newmember)).map((existUser, i) => (` ${(i + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })} ${existUser.nickname}`)).join('\n')
+          ) +
+          colors.gray('\n\n-------------------\n') +
+          'Join chat as ' +
+          colors.underline.yellow(msg.toString('utf8').replace(/\s+/g, '').trim()) +
+          colors.gray('\n-------------------\n\n')
+        , info)
         userList[userIndex].nickname = msg.toString('utf8').replace(/\s+/g, '').trim()
         userList[userIndex].newmember = false
       }
@@ -46,8 +57,10 @@ Server.on('message', (msg, info) => {
           delete userList[userIndex]
           break
         case 'h':
-          sendMessage('沒有人會來幫你喔Owo', info)
-        default: break
+          sendMessage('沒有人會來幫你喔Owo\n', info)
+          break
+        default:
+          sendMessage('Command Syntax error.\n', info)
       }
     } else {
       let message = colors.cyan(
