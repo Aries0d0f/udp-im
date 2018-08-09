@@ -69,7 +69,7 @@ Server.on('message', (msg, info) => {
           userList[userIndex].nickname :
           info.address
             .split('.')
-            .map(e => parseInt(e).toLocaleString('en-US', { minimumIntegerDigits: 3, useGrouping:false }))
+            .map(e => parseInt(e).toLocaleString('en-US', { minimumIntegerDigits: 3, useGrouping: false }))
             .join('.')
         }]: `
       ) + msg.toString('utf8')
@@ -104,13 +104,14 @@ const RandomPort = (max, min) => {
 const WelcomeMsg = () => {
   return colors.black.bgGreen(
       '\n\n' +
-      ' • Server online • \n\n') +
+      ' • Server online • \n\n'
+    ) +
     colors.cyan(
       '[==== Channel ====]\n' +
       '|                 |\n' +
       '|   '
     ) +
-    colors.black.bgCyan(` CODE ${Server.address().port} `) +
+    colors.black.bgCyan(` PORT ${Server.address().port} `) +
     colors.cyan(
                      '   |\n' +
       '|                 |\n' +
